@@ -13,9 +13,8 @@ route.post('/list', async (ctx) => {
   ctx.body = res;
 });
 
-
 route.post('/type/list', async (ctx) => {
-  let res = []
+  let res = [];
   res.push({name: "全部", type: 0});
   let ts = await jokesService.getJokerTypes();
   ts.forEach((t) => {
