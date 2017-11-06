@@ -3,12 +3,8 @@ const jokesService = require('./jokes.service');
 module.exports = route = new Router().prefix('/server/jokes');
 
 
-route.get('/list.json', async (ctx) => {
-    let pagework = {
-        pageNum: ctx.request.query.pageNum || 1,
-        pageSize: ctx.request.query.pageSize || 10
-
-    };
+route.post('/list.json', async (ctx) => {
+    let pagework = ctx.request.body.pagework || {};
     if (!pagework.pageNum) pagework.pageNum = 1;
     if (!pagework.pageSize) pagework.pageSize = 20;
     let filter = ctx.request.body.filter || {};
@@ -17,17 +13,3 @@ route.get('/list.json', async (ctx) => {
     ctx.body = res;
 });
 
-route.post('/type/list', async (ctx) => {
-    let res = [];
-    res.push({name: "全部", type: 0});
-    let ts = await jokesService.getJokerTypes();
-    ts.forEach((t) => {
-        res.push(t);
-    });
-    ctx.body = res;
-});
-
-route.post("/praise/:_id", async (ctx) => {
-    let joke = await jokesService.praiseJoker(ctx.params._id);
-    ctx.body = joke
-});
