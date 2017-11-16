@@ -1,5 +1,8 @@
 const conf = {
-    server: {port: 3000},
+
+    server: {
+        port: 3000
+    },
     redis: {
         uri: 'miup.cc',
         port: '16379',
@@ -17,8 +20,4 @@ const conf = {
 
 };
 
-const dev = require('./dev');
-
-// module.exports = conf;
-module.exports = dev;
-
+module.exports = conf;

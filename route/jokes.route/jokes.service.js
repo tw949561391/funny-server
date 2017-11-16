@@ -1,4 +1,4 @@
-const Pool_mongo = require('../../pool/mongo');
+const Pool_mongo = require('../../core/pool/mongo');
 const ObjectId = require('mongodb').ObjectID;
 module.exports = {
     /**
@@ -9,17 +9,13 @@ module.exports = {
         let db = await Pool_mongo.acquire();
         let collection = db.collection('joke');
         let skip = (pageAble.pageNum - 1) * pageAble.pageSize;
-        let jokers = [];
+        let jokers;
+        let query={};
+        if(filter.time_div){
+            query.create_time={$lte:new Date(filter.time_div)}
+        }
         try {
-            let lists = await collection.find(filter||{}).sort(sort).skip(skip).limit(pageAble.pageSize).toArray();
-            lists.forEach(list => {
-                jokers.push({
-                    id: list._id,
-                    title: list.title,
-                    pics: list.pics || [],
-                    type: list.type
-                })
-            })
+            jokers = await collection.find(query).sort({create_time:-1}).skip(skip).limit(pageAble.pageSize).toArray();
         } catch (e) {
             console.error(e);
         } finally {

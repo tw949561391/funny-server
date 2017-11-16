@@ -1,0 +1,8 @@
+const app = require('../app');
+const http = require('http');
+const serverConf=require('../conf').server;
+
+const server=http.createServer(app.callback());
+server.listen(serverConf.port,()=>{
+    console.log('start on '+serverConf.port);
+});
