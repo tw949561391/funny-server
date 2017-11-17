@@ -3,16 +3,20 @@ const Koa_logger = require('koa-logger');
 const Koa_parser = require('koa-bodyparser');
 const Koa_error = require('koa-json-error');
 const Koa_cors = require('kcors');
-
-
-
-
+const Logger = require('./core/log');
+const LoggerConf = require('./conf').log4j;
+const ServerConf = require('./conf').server;
 
 
 module.exports = app = new Koa();
+if (ServerConf.dev) {
+    app.is_dev = true;
+}
+Logger.init(LoggerConf);
 
-
-app.use(Koa_logger());
+if (app.is_dev) {
+    app.use(Koa_logger());
+}
 app.use(Koa_parser());
 app.use(Koa_error());
 app.use(Koa_cors());

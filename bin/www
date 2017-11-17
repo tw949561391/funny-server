@@ -1,8 +1,9 @@
 const app = require('../app');
 const http = require('http');
-const serverConf=require('../conf').server;
+const serverConf = require('../conf').server;
+const log = require('../core/log').getLogger();
 
-const server=http.createServer(app.callback());
-server.listen(serverConf.port,()=>{
-    console.log('start on '+serverConf.port);
+const server = http.createServer(app.callback());
+server.listen(serverConf.port, () => {
+    log.debug('server start up success on port:', serverConf.port);
 });

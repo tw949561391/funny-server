@@ -1,5 +1,6 @@
-const Pool_mongo = require('../../core/pool/mongo');
+const Pool_mongo = require('../../core/pool').mongo;
 const ObjectId = require('mongodb').ObjectID;
+const log = require('../../core/log').getLogger();
 module.exports = {
     /**
      * @param pageAble
@@ -8,36 +9,15 @@ module.exports = {
     getJokers: async (pageAble, filter, sort) => {
         let db = await Pool_mongo.acquire();
         let collection = db.collection('joke');
-        let skip = (pageAble.pageNum - 1) * pageAble.pageSize;
-        let jokers;
-        let query={};
-        if(filter.time_div){
-            query.create_time={$lte:new Date(filter.time_div)}
-        }
+        let limit = pageAble.pageSize || 10;
+        let skip = ((pageAble.pageNum || 1) - 1) * limit;
         try {
-            jokers = await collection.find(query).sort({create_time:-1}).skip(skip).limit(pageAble.pageSize).toArray();
+            return await collection.find(filter,{"_id":1,"title":1,"pics":1,"content":1,"create_time":1,type:1}).sort(sort).skip(skip).limit(limit).toArray();
         } catch (e) {
-            console.error(e);
+            log.error(e.message);
+            throw e;
         } finally {
             Pool_mongo.release(db);
-            return jokers;
         }
-    },
-
-    getJokerTypes: async () => {
-        let db = await Pool_mongo.acquire();
-        let collection = db.collection('joke-types');
-        let jokers = await collection.find({}).toArray();
-        Pool_mongo.release(db);
-        return jokers;
-    },
-    praiseJoker: async (_id) => {
-        let db = await Pool_mongo.acquire();
-        let collection = db.collection('jokes');
-        let fileter = {_id: ObjectId(_id)};
-        let jokers = await collection.updateOne(fileter, {$inc: {praise: 1}});
-        jokers = await collection.findOne(fileter);
-        Pool_mongo.release(db);
-        return jokers;
     }
 };

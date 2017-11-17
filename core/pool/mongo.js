@@ -2,6 +2,8 @@
 const GenericPool = require('generic-pool');
 const MongoClient = require('mongodb').MongoClient;
 const conf_mongo = require('../../conf/index').mongo;
+const log = require('../log').getLogger();
+
 
 const factory = {
   create: function () {
@@ -9,11 +11,11 @@ const factory = {
       MongoClient.connect(`mongodb://${conf_mongo.uri}:${conf_mongo.port}/${conf_mongo.dbName}`, (err, db) => {
         if (err) {
           reject(err);
-          console.log("create mongo connect entity error")
+            log.error("create mongo connect entity error")
         }
         else {
           resolve(db);
-          console.log("create mongo connect entity success")
+          log.debug("create mongo connect entity success")
         }
       })
     })
@@ -21,7 +23,7 @@ const factory = {
   destroy: function (db) {
     return new Promise(function (resolve) {
       db.close();
-      console.log("close mongo connect entity success");
+      log.debug("close mongo connect entity success");
       resolve();
     })
   }

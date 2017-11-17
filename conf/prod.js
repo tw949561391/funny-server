@@ -1,46 +1,40 @@
 module.exports.server = {
-    port: 3000,
-    dev: true
+    port: 3000
 };
 module.exports.redis = {
     uri: 'miup.cc',
     port: '16379',
-    max_pool: 2,
-    min_pool: 1
+    max_pool: 10,
+    min_pool: 2
 };
-
 module.exports.mongo = {
     uri: 'miup.cc',
     port: '17017',
     dbName: 'joke',
-    max_pool: 2,
-    min_pool: 1
+    max_pool: 10,
+    min_pool: 2
 };
 
 module.exports.log4j = {
-    replaceConsole: true,
     appenders: {
         console: {
             type: 'console'
         },
-        out: {
-            type: 'stdout'
-        },
         service: {
             type: 'dateFile',
-            filename: '/logs/service.log',
+            filename: '/var/log/node/funny-server/service.log',
             pattern: '.yyyy-MM-dd'
         }
     },
     categories: {
         default:
             {
-                appenders: ['console', 'out'], level: 'debug'
+                appenders: ['console'], level: 'info'
             },
         service:
             {
-                appenders: ['service', 'out'], level: 'debug'
+                appenders: ['service'], level: 'info'
             }
-    }
+    },
+    replaceConsole: true
 };
-
