@@ -44,3 +44,5 @@ module.exports.log4j = {
     }
 };
 
+module.exports.miupOauth = {};
+

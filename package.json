@@ -9,8 +9,7 @@
     "server-top": "forever stop ./bin/www",
     "upload": "scp -r ./ root@miup.cc:/web/funny-server"
   },
-  "keywords": [
-  ],
+  "keywords": [],
   "author": "Tristan201314",
   "license": "ISC",
   "dependencies": {
@@ -18,14 +17,14 @@
     "kcors": "*",
     "koa": "^2.4.1",
     "koa-bodyparser": "*",
-    "koa-json-error": "*",
     "koa-logger": "^3.1.0",
     "koa-oauth-server": "*",
     "koa-router": "^7.3.0",
     "log4js": "^2.3.12",
-    "miup-utils": "*",
+    "miup-errors": "^1.0.1",
+    "miup-handlers": "^1.0.0",
+    "miup-utils": "^1.0.0",
     "mongodb": "^2.2.33",
-    "oauth2-server": "*",
     "redis": "*"
   }
 }

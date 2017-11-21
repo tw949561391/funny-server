@@ -38,3 +38,7 @@ module.exports.log4j = {
     },
     replaceConsole: true
 };
+
+
+module.exports.miupOauth = {};
+
