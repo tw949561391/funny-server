@@ -1,14 +1,14 @@
 module.exports.server = {
-    port: 3000
+    port: 3001
 };
 module.exports.redis = {
-    uri: 'miup.cc',
+    uri: 'localhost',
     port: '16379',
     max_pool: 10,
     min_pool: 2
 };
 module.exports.mongo = {
-    uri: 'miup.cc',
+    uri: 'localhost',
     port: '17017',
     dbName: 'joke',
     max_pool: 10,
@@ -40,5 +40,10 @@ module.exports.log4j = {
 };
 
 
-module.exports.miupOauth = {};
+
+module.exports.miupOauth = {
+    url: "http://localhost:3000/server/oauth/check.json",
+    method: "POST"
+};
+
 

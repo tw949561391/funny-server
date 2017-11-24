@@ -1,7 +1,7 @@
 const Router = require('koa-router');
-const jokesService = require('./jokes.service');
+const jokesService = require('./service/jokes.service');
 module.exports = route = new Router().prefix('/server/jokes');
-
+route.use(require('../../core/auth').fechUserMd());
 
 route.post('/list.json', async (ctx) => {
     let body = ctx.request.body || {};
@@ -10,5 +10,12 @@ route.post('/list.json', async (ctx) => {
     let sort = body.sort || {};
     let res = await jokesService.getJokers(pagework, filter, sort) || [];
     ctx.body = res;
+});
+
+
+route.post("/talk_to/{jokeId}.json", async (ctx) => {
+
+    ctx.body="ss"
+
 });
 

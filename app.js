@@ -9,6 +9,7 @@ const ServerConf = require('./conf').server;
 const Notfound = require('miup-errors').Notfound;
 
 
+
 module.exports = app = new Koa();
 if (ServerConf.dev) {
     app.is_dev = true;
@@ -22,11 +23,15 @@ app.use(Koa_parser());
 app.use(Koa_errorHandler());
 app.use(Koa_cors());
 
+
+
+
 //route list
 app.use(require('./route/home.route/index').routes());
-app.use(require('./route/jokes.route/index').routes());
+app.use(require('./route/jokes.route/index.route').routes());
+app.use(require('./route/jokes.route/talk.route').routes());
 app.use(require('./route/login.route/index').routes());
 
 app.use(() => {
-    throw new Notfound('resource not found', 404)
+    throw new Notfound()
 });

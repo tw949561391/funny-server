@@ -1,6 +1,6 @@
-const Pool_mongo = require('../../core/pool').mongo;
+const Pool_mongo = require('../../../core/pool/index').mongo;
 const ObjectId = require('mongodb').ObjectID;
-const log = require('../../core/log').getLogger();
+const log = require('../../../core/log/index').getLogger();
 module.exports = {
     /**
      * @param pageAble

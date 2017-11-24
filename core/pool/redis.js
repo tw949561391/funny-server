@@ -14,7 +14,7 @@ const factory = {
             });
             db.on('error', (err) => {
                 log.error('create redis connect entity error');
-                reject(err)
+                reject(err);
             })
         })
     },
