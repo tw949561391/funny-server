@@ -24,21 +24,26 @@ module.exports.log4j = {
             type: 'dateFile',
             filename: '/var/log/node/funny-server/service.log',
             pattern: '.yyyy-MM-dd'
+        },
+        rpc: {
+            type: 'dateFile',
+            filename: '/var/log/node/funny-server/rpc.log',
+            pattern: '.yyyy-MM-dd'
         }
     },
     categories: {
-        default:
-            {
-                appenders: ['console'], level: 'info'
-            },
-        service:
-            {
-                appenders: ['service'], level: 'info'
-            }
+        default: {
+            appenders: ['console'], level: 'info'
+        },
+        service: {
+            appenders: ['service'], level: 'info'
+        },
+        rpc: {
+            appenders: ['rpc'], level: 'info'
+        }
     },
     replaceConsole: true
 };
-
 
 
 module.exports.miupOauth = {

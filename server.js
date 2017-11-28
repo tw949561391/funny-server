@@ -7,10 +7,11 @@ const Logger = require('./core/log');
 const LoggerConf = require('./conf').log4j;
 const ServerConf = require('./conf').server;
 const Notfound = require('miup-errors').Notfound;
+const http = require('http');
 
 
-
-module.exports = app = new Koa();
+const app = new Koa();
+const server=http.createServer(app.callback());
 if (ServerConf.dev) {
     app.is_dev = true;
 }
@@ -24,8 +25,6 @@ app.use(Koa_errorHandler());
 app.use(Koa_cors());
 
 
-
-
 //route list
 app.use(require('./route/home.route/index').routes());
 app.use(require('./route/jokes.route/index.route').routes());
@@ -35,3 +34,5 @@ app.use(require('./route/login.route/index').routes());
 app.use(() => {
     throw new Notfound()
 });
+
+module.exports=server

@@ -24,8 +24,8 @@
     "miup-errors": "^1.0.3",
     "miup-handlers": "^1.0.5",
     "miup-utils": "^1.0.0",
-    "miup-who": "^1.0.8",
     "mongodb": "^2.2.33",
-    "redis": "*"
+    "redis": "*",
+    "socket.io-client": "^2.0.4"
   }
 }

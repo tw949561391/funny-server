@@ -1,7 +1,10 @@
 const Router = require('koa-router');
 const jokesService = require('./service/jokes.service');
+const Oauth=require('../../core/rpc').Oauth;
 module.exports = route = new Router().prefix('/server/jokes');
-route.use(require('../../core/auth').fechUserMd());
+
+route.use(Oauth.fecthUserMd());
+
 
 route.post('/list.json', async (ctx) => {
     let body = ctx.request.body || {};

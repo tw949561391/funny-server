@@ -28,19 +28,25 @@ module.exports.log4j = {
         },
         service: {
             type: 'dateFile',
-            filename: '/logs/service.log',
+            filename: 'logs/service.log',
+            pattern: '.yyyy-MM-dd'
+        },
+        rpc: {
+            type: 'dateFile',
+            filename: 'logs/rpc.log',
             pattern: '.yyyy-MM-dd'
         }
     },
     categories: {
-        default:
-            {
-                appenders: ['console', 'out'], level: 'debug'
-            },
-        service:
-            {
-                appenders: ['service', 'out'], level: 'debug'
-            }
+        default: {
+            appenders: ['console', 'out'], level: 'debug'
+        },
+        service: {
+            appenders: ['service', 'out'], level: 'debug'
+        },
+        rpc: {
+            appenders: ['rpc', 'out'], level: 'debug'
+        }
     }
 };
 
