@@ -55,3 +55,14 @@ module.exports.miupOauth = {
     method: "POST"
 };
 
+
+//----rpc
+module.exports.rpcOauth = {
+    uri: 'ws://localhost:3000',
+    max_pool: 2,
+    min_pool: 1,
+    options: {
+        path: '/rpc'
+    }
+};
+

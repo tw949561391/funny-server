@@ -7,6 +7,5 @@ router.use(Oauth.validateUserMd());
 
 
 router.get('/helloword.json', async (ctx) => {
-    console.log('ss')
     ctx.body = ctx.user;
 });

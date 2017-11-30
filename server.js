@@ -11,15 +11,11 @@ const http = require('http');
 
 
 const app = new Koa();
-const server=http.createServer(app.callback());
-if (ServerConf.dev) {
-    app.is_dev = true;
-}
+const server = http.createServer(app.callback());
+
 Logger.init(LoggerConf);
 
-if (app.is_dev) {
-    app.use(Koa_logger());
-}
+app.use(Koa_logger());
 app.use(Koa_parser());
 app.use(Koa_errorHandler());
 app.use(Koa_cors());
@@ -32,7 +28,7 @@ app.use(require('./route/jokes.route/talk.route').routes());
 app.use(require('./route/login.route/index').routes());
 
 app.use(() => {
-    throw new Notfound()
+    throw new Notfound("resource not found")
 });
 
-module.exports=server
+module.exports = server;

@@ -1,2 +1,3 @@
-module.exports.mongo=require('./mongo');
-// module.exports.redis=require('./redis');
+module.exports.MongoPool = require('./mongo');
+module.exports.RedisPool = require('./redis');
+module.exports.RpcAuthPool = require('./oauth-rpc');

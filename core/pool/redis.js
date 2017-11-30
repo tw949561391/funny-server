@@ -1,8 +1,14 @@
 //--import
 const GenericPool = require('generic-pool');
 const RedisClient = require('redis');
+const Bluebird = require('bluebird');
 const conf_redis = require('../../conf/index').redis;
-const log = require('../log').getLogger();
+Bluebird.promisifyAll(RedisClient.RedisClient.prototype);
+Bluebird.promisifyAll(RedisClient.Multi.prototype);
+const log=require('../log').getLogger("init");
+
+
+
 
 const factory = {
     create: function () {
@@ -10,11 +16,12 @@ const factory = {
             const db = RedisClient.createClient(conf_redis.port, conf_redis.uri);
             db.on('connect', () => {
                 resolve(db);
-                log.debug('create redis connect entity success')
+                log.info(`----------------------------${process.pid}:redis创建链接`);
+
             });
             db.on('error', (err) => {
-                log.error('create redis connect entity error');
-                reject(err);
+                log.error(`----------------------------${process.pid}:redis链接失败`);
+                reject(err)
             })
         })
     },
@@ -22,7 +29,7 @@ const factory = {
         return new Promise(function (resolve) {
             db.quit();
             db.on('end', () => {
-                log.debug('close redis connect entity success');
+                log.info(`----------------------------${process.pid}:redis断开链接`);
                 resolve();
             });
         })

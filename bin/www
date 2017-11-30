@@ -1,56 +1,43 @@
-#!/usr/bin/env node
-
-const log = require('../core/log').getLogger();
+const log = require('../core/log').getLogger("init");
 const port = require('../conf').server.port;
 const server = require('../server');
 const cluster = require('cluster');
 const numCPUs = require('os').cpus().length;
 
-function releaseServer() {
 
+function release() {
     if (cluster.isMaster) {
-        log.info(`Master ${process.pid} is running`);
-
-        // Fork workers.
+        log.info(`----------------------------CPU数量为${numCPUs}----------------------------`);
+        log.info(`----------------------------主进程 ${process.pid} 正在运行中----------------------------`);
         for (let i = 0; i < numCPUs; i++) {
             cluster.fork();
         }
-
         cluster.on('exit', (worker, code, signal) => {
-            log.info(`worker ${worker.process.pid} died`);
+            log.info(`----------------------------进程 ${worker.process.pid} 关闭----------------------------`);
         });
     } else {
-        // Workers can share any TCP connection
-        // In this case it is an HTTP server
-        server.listen(port);
-
-        log.info(`Worker ${process.pid} started`);
+        server.listen(port, function onListening() {
+            let addr = server.address();
+            let bind = typeof addr === 'string' ? addr : addr.port;
+            log.info(`----------------------------服务器已启动：----------------------------`);
+            log.info(`----------------------------端口号：${bind}----------------------------`);
+            log.info(`----------------------------进程ID：${process.pid}----------------------------`);
+        });
     }
 }
 
-
-server.on('error', function onError(error) {
-    let bind = typeof port === 'string' ? 'Pipe ' + port : 'Port ' + port;
-
-    // handle specific listen errors with friendly messages
-    switch (error.code) {
-        case 'EACCES':
-            log.error(bind + ' requires elevated privileges');
-            break;
-        case 'EADDRINUSE':
-            log.error(bind + ' is already in use');
-            break;
-        default:
-            log.error(error.message);
-            break;
-    }
-    process.exit(1);
-});
-server.on('listening', function onListening() {
+function dev() {
+    server.listen(port, function onListening() {
         let addr = server.address();
-        let bind = typeof addr === 'string' ? 'pipe ' + addr : 'port ' + addr.port;
-        log.info('server listening on ' + bind);
-    }
-);
+        let bind = typeof addr === 'string' ? addr : addr.port;
+        log.info(`----------------------------服务器已启动：----------------------------`);
+        log.info(`----------------------------端口号：${bind}----------------------------`);
+        log.info(`----------------------------进程ID：${process.pid}----------------------------`);
+    });
+}
 
-releaseServer();
+if('prod'===process.env.NODE_ENV){
+    release()
+}else {
+    dev()
+}
