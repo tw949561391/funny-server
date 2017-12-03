@@ -1,4 +1,4 @@
-const Pool_mongo = require('../../../core/pool/index').mongo;
+const Pool_mongo = require('../../../core/pool/index').MongoPool;
 const ObjectId = require('mongodb').ObjectID;
 const log = require('../../../core/log/index').getLogger();
 const BusinessError = require('miup-errors').BusinessError;

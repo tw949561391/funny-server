@@ -3,8 +3,8 @@ module.exports.server = {
     dev: true
 };
 module.exports.redis = {
-    uri: 'localhost',
-    port: '6379',
+    uri: 'miup.cc',
+    port: '16379',
     max_pool: 2,
     min_pool: 1
 };
@@ -58,7 +58,7 @@ module.exports.miupOauth = {
 
 //----rpc
 module.exports.rpcOauth = {
-    uri: 'ws://localhost:3000',
+    uri: 'ws://miup.cc:3000',
     max_pool: 2,
     min_pool: 1,
     options: {
